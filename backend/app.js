@@ -37,7 +37,7 @@ app.use(cors());
 app.use(`/${prefix}/auth`, authRoutes);
 
 // Apply the authentication middleware to protect multiple routes
-//app.use(`/${prefix}`, verifyToken); // Add this line before defining the routes
+app.use(`/${prefix}`, verifyToken); // Add this line before defining the routes
 
 //Middleware to log user activity
 app.use((req, res, next) => {

@@ -6,6 +6,6 @@ const confirmEmail = require("../auth/ConfirmEmailController");
 // Login endpoint
 router.post('/login', authController.login);
 router.post('/logout', authController.logout);
-router.post('/verify-token', authController.verifyToken);
+router.post('/verify-token', authController.authChek);
 router.get('/confirm-email', confirmEmail.confirmEmail);
 module.exports = router;
