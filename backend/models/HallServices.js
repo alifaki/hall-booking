@@ -55,5 +55,5 @@ const HallServices= db.define("hall_services", {
 });
 
 HallServices.belongsTo(Halls, {foreignKey: "hall_id"});
-module.exports = {HallServices};
+module.exports = HallServices;
 

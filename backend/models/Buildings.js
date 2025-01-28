@@ -40,7 +40,7 @@ const Buildings= db.define("buildings", {
     }
 });
 
-module.exports = {Buildings};
+module.exports = Buildings;
 const {Halls} = require("./Halls");
 const {BuildingImages} = require("./BuildingImages");
 

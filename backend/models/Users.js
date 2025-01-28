@@ -87,4 +87,4 @@ const Users= db.define("users", {
         allowNull: true
     }
 });
-module.exports = {Users};
+module.exports = Users;

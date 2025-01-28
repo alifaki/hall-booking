@@ -42,4 +42,4 @@ const BuildingImages= db.define("building_images", {
     }
 });
 
-module.exports = {BuildingImages};
+module.exports = BuildingImages;

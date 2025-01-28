@@ -1,3 +1,5 @@
+// utils.js
+
 const { DataTypes } = require('sequelize');
 
 const generateTimestamps = () => ({
@@ -5,22 +7,26 @@ const generateTimestamps = () => ({
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
         get() {
-            const rawValue = this.getDataValue('created_at');
+            const rawValue = this.getDataValue('createdAt');
             if (!rawValue) return null;
             const date = new Date(rawValue);
-            return `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()}`;
-        }
+            return `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1)
+                .toString()
+                .padStart(2, '0')}-${date.getFullYear()}`;
+        },
     },
     updatedAt: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
         get() {
-            const rawValue = this.getDataValue('updated_at');
+            const rawValue = this.getDataValue('updatedAt');
             if (!rawValue) return null;
             const date = new Date(rawValue);
-            return `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()}`;
-        }
-    }
+            return `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1)
+                .toString()
+                .padStart(2, '0')}-${date.getFullYear()}`;
+        },
+    },
 });
 
 module.exports = { generateTimestamps };

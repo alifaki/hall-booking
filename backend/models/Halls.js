@@ -95,6 +95,6 @@ const Halls= db.define("halls", {
 Halls.belongsTo(Buildings, {foreignKey: "building_id"});
 Halls.belongsTo(Users, {foreignKey: "owner_id"});
 
-module.exports = {Halls};
+module.exports = Halls;
 const {HallsImages} = require("./HallsImages");
 Halls.hasMany(HallsImages, {foreignKey: "hall_id"});

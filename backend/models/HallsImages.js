@@ -41,4 +41,4 @@ const HallsImages= db.define("hall_images", {
     }
 });
 
-module.exports = {HallsImages};
+module.exports = HallsImages;

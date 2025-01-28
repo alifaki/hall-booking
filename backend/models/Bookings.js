@@ -104,5 +104,5 @@ const Bookings= db.define("bookings", {
 
 Bookings.belongsTo(Halls, {foreignKey: "hall_id"});
 Bookings.belongsTo(Users, {foreignKey: "user_id"});
-module.exports = {Bookings};
+module.exports = Bookings;
 
