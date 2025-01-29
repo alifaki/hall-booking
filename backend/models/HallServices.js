@@ -1,15 +1,10 @@
 const db = require("../config/db");
 const { DataTypes } = require('sequelize');
-const {Halls} = require("./Halls");
 
 const HallServices= db.define("hall_services", {
     hall_id: {
         type: DataTypes.BIGINT,
         allowNull: false,
-        references: {
-            model: Halls,
-            key: 'id'
-        },
         validate: {
             notEmpty: {
                 msg: 'Halls Id is required'
@@ -54,6 +49,5 @@ const HallServices= db.define("hall_services", {
     }
 });
 
-HallServices.belongsTo(Halls, {foreignKey: "hall_id"});
 module.exports = HallServices;
 

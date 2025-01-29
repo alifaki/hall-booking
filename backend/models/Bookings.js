@@ -1,16 +1,10 @@
 const db = require("../config/db");
 const { DataTypes } = require('sequelize');
-const {Halls} = require("./Halls");
-const {Users} = require("./Users");
 
 const Bookings= db.define("bookings", {
     hall_id: {
         type: DataTypes.BIGINT,
         allowNull: false,
-        references: {
-            model: Halls,
-            key: 'id'
-        },
         validate: {
             notEmpty: {
                 msg: 'Halls Id is required'
@@ -32,10 +26,6 @@ const Bookings= db.define("bookings", {
     user_id: {
         type: DataTypes.BIGINT,
         allowNull: false,
-        references: {
-            model: Users,
-            key: 'id'
-        },
         validate: {
             notEmpty: {
                 msg: 'User Id is required'
@@ -102,7 +92,5 @@ const Bookings= db.define("bookings", {
     },
 });
 
-Bookings.belongsTo(Halls, {foreignKey: "hall_id"});
-Bookings.belongsTo(Users, {foreignKey: "user_id"});
 module.exports = Bookings;
 

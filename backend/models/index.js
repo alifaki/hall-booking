@@ -1,43 +1,69 @@
+// models/index.js
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
-const process = require('process');
-const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
-const db = {};
+const sequelize = require('../config/db'); // the Sequelize instance from db.js
 
-let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
+// Import all model definitions
+const Bookings = require('./Bookings');
+const BuildingImages = require('./BuildingImages');
+const Buildings = require('./Buildings');
+const Halls = require('./Halls');
+const HallServices = require('./HallServices');
+const HallsImages = require('./HallsImages');
+const Users = require('./Users');
 
-fs
-  .readdirSync(__dirname)
-  .filter(file => {
-    return (
-      file.indexOf('.') !== 0 &&
-      file !== basename &&
-      file.slice(-3) === '.js' &&
-      file.indexOf('.test.js') === -1
-    );
-  })
-  .forEach(file => {
-    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
-    db[model.name] = model;
-  });
+// If your models have "associate" static or prototype methods, call them here:
+Bookings.associate?.(sequelize.models);
+Buildings.associate?.(sequelize.models);
+Halls.associate?.(sequelize.models);
+HallServices.associate?.(sequelize.models);
 
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
-});
+Bookings.belongsTo(Halls, { foreignKey: 'hall_id', as: 'hallId' });
+Bookings.belongsTo(Users, { foreignKey: 'user_id', as: 'userId' });
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+Buildings.associate = (models) => {
+    Buildings.hasMany(models.Halls, {
+        foreignKey: 'building_id',
+        as: 'buildingId'
+    });
+    Buildings.hasMany(models.BuildingImages, {
+        foreignKey: 'building_id',
+        as: 'building_id'
+    });
+};
 
-module.exports = db;
+Halls.associate = (models) => {
+    Halls.belongsTo(models.Building, {
+        foreignKey: 'building_id',
+        as: 'buildingId'
+    });
+    Halls.belongsTo(models.Users, {
+        foreignKey: 'owner_id',
+        as: 'userId'
+    });
+
+    Halls.hasMany(models.HallsImages, {
+        foreignKey: 'hall_id',
+        as: 'hallId'
+    });
+};
+
+HallServices.associate = (models) => {
+    HallServices.belongsTo(models.Halls, {
+        foreignKey: 'hall_id',
+        as: 'hallId'
+    });
+};
+
+
+// Export the models (and the sequelize instance if desired):
+module.exports = {
+    Bookings,
+    Buildings,
+    BuildingImages,
+    Halls,
+    HallServices,
+    HallsImages,
+    Users,
+    sequelize
+};

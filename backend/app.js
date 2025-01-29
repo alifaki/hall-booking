@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors'); // Import cors package
+// --- Import Sequelize instance & models (via index.js) ---
+const { sequelize } = require('./models');
 
 //const {notFoundHandler} = require('./middleware/errorHandler'); //import handler middleware
 const {verifyToken} = require('./auth/authController');

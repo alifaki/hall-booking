@@ -1,13 +1,12 @@
-// EventLog.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
-const {Users} = require("./Users"); // Import your Sequelize instance
+const Users = require('./Users'); // Correct import
 
 const EventLog = sequelize.define('event_logs', {
     logs_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
     },
     user_id: {
         type: DataTypes.INTEGER,
@@ -35,17 +34,17 @@ const EventLog = sequelize.define('event_logs', {
     },
     coordinate: {
         type: DataTypes.STRING(300),
-        allowNull: true, // Make this field nullable if you want to include coordinates
+        allowNull: true,
     },
     updated_at: {
         type: DataTypes.DATE,
         defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-    }
-    ,created_at: {
+    },
+    created_at: {
         type: DataTypes.DATE,
         defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
     },
 });
 
-EventLog.belongsTo(Users, {foreignKey: 'user_id'});
+EventLog.belongsTo(Users, { foreignKey: 'user_id' }); // Correct association
 module.exports = EventLog;

@@ -41,8 +41,3 @@ const Buildings= db.define("buildings", {
 });
 
 module.exports = Buildings;
-const {Halls} = require("./Halls");
-const {BuildingImages} = require("./BuildingImages");
-
-Buildings.hasMany(Halls, {foreignKey:"building_id"});
-Buildings.hasMany(BuildingImages, {foreignKey:"building_id"});

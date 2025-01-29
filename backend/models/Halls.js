@@ -1,7 +1,5 @@
 const db = require("../config/db");
 const { DataTypes } = require('sequelize');
-const {Buildings} = require("./Buildings");
-const {Users} = require("./Users");
 
 const Halls= db.define("halls", {
     hall_name: {
@@ -19,10 +17,6 @@ const Halls= db.define("halls", {
     building_id: {
         type: DataTypes.BIGINT,
         allowNull: false,
-        references: {
-            model: Buildings,
-            key: 'id'
-        },
         validate: {
             notEmpty: {
                 msg: 'Building Id is required'
@@ -44,10 +38,6 @@ const Halls= db.define("halls", {
     owner_id: {
         type: DataTypes.BIGINT,
         allowNull: false,
-        references: {
-            model: Users,
-            key: 'id'
-        },
         validate: {
             notEmpty: {
                 msg: 'Owner Id is required'
@@ -92,9 +82,4 @@ const Halls= db.define("halls", {
     }
 });
 
-Halls.belongsTo(Buildings, {foreignKey: "building_id"});
-Halls.belongsTo(Users, {foreignKey: "owner_id"});
-
 module.exports = Halls;
-const {HallsImages} = require("./HallsImages");
-Halls.hasMany(HallsImages, {foreignKey: "hall_id"});

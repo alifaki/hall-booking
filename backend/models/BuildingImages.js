@@ -1,6 +1,5 @@
 const db = require("../config/db");
 const { DataTypes } = require('sequelize');
-const {Buildings} = require("./Buildings");
 
 const BuildingImages= db.define("building_images", {
     image_url: {
@@ -18,10 +17,6 @@ const BuildingImages= db.define("building_images", {
     building_id : {
         type: DataTypes.BIGINT,
         allowNull: false,
-        references: {
-            model: Buildings,
-            key: 'id'
-        },
         validate: {
             notEmpty: {
                 msg: 'Building Id is required'
