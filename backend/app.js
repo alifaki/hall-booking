@@ -72,6 +72,10 @@ app.get(`/${prefix}/images/:filename`, (req, res) => {
 // Start Server
 const PORT = process.env.SERVER_PORT;
 const HOST = process.env.SERVER_HOST;
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.originalUrl}`);
+    next();
+});
 app.listen(PORT, HOST,() => {
-    console.log(`Server running on Host ${HOST} port ${PORT}`);
+    console.log(`Server running at http://${HOST}:${PORT}/${prefix}`);
 });
