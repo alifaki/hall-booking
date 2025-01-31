@@ -15,8 +15,8 @@ const connection = new Sequelize({
     define: {
         // Change the default names for timestamps globally
         timestamps: true,         // Enable timestamps in all models
-        // createdAt: 'created_at',  // custom column name
-        // updatedAt: 'updated_at',  // custom column name
+        createdAt: 'created_at',  // custom column name
+        updatedAt: 'updated_at',  // custom column name
     },
     dialectOptions: {
         // Force Sequelize to cast BIGINT as an integer
