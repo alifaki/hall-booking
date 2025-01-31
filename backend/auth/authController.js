@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 require("dotenv").config();
 const bcrypt = require('bcrypt');
-const {Users} = require('../models/Users');
+const {Users} = require('../models');
 const {errorResponse, successResponse, formatedError} = require('../controller/baseController');
 
 const tokenBlacklist = [];

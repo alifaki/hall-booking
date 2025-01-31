@@ -3,11 +3,11 @@
 const { DataTypes } = require('sequelize');
 
 const generateTimestamps = () => ({
-    created_at: {
+    createdAt: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
         get() {
-            const rawValue = this.getDataValue('created_at');
+            const rawValue = this.getDataValue('createdAt');
             if (!rawValue) return null;
             const date = new Date(rawValue);
             return `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1)
@@ -15,11 +15,11 @@ const generateTimestamps = () => ({
                 .padStart(2, '0')}-${date.getFullYear()}`;
         },
     },
-    updated_at: {
+    updatedAt: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
         get() {
-            const rawValue = this.getDataValue('updated_at');
+            const rawValue = this.getDataValue('updatedAt');
             if (!rawValue) return null;
             const date = new Date(rawValue);
             return `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1)
