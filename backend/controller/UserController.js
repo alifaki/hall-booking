@@ -3,7 +3,7 @@ require("dotenv").config();
 const {successResponse, errorResponse, formatedError} = require('./baseController');
 const bcrypt = require('bcrypt');
 
-const { Users } = require('../models/Users');
+const { Users } = require('../models');
 
 class UserController {
 

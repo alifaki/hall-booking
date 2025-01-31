@@ -2,10 +2,7 @@ const jwt = require('jsonwebtoken');
 require("dotenv").config();
 const {successResponse, errorResponse, formatedError} = require('./baseController');
 
-const { Halls } = require('../models/Halls');
-const {Buildings} = require("../models/Buildings");
-const {Users} = require("../models/Users");
-const {HallsImages} = require("../models/HallsImages");
+const { Halls,Buildings,Users,HallsImages} = require('../models');
 
 class HallsController {
 
