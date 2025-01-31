@@ -37,7 +37,7 @@ app.use(cors());
 
 // Routes
 app.use(`/${prefix}/auth`, authRoutes);
-
+app.use(`/${prefix}/user-details`,userRoutes);
 // Apply the authentication middleware to protect multiple routes
 app.use(`/${prefix}`, verifyToken); // Add this line before defining the routes
 
@@ -53,7 +53,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(`/${prefix}/user-details`,userRoutes);
 app.use(`/${prefix}/building`,buildingRoutes);
 app.use(`/${prefix}/halls`,hallsRoutes);
 app.use(`/${prefix}/hall-images`,hallImagesRoutes);
