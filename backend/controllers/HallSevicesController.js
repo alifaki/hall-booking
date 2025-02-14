@@ -1,6 +1,4 @@
-const jwt = require('jsonwebtoken');
-require("dotenv").config();
-const {successResponse, errorResponse, formatedError} = require('./baseController');
+const baseController = require('./BaseController');
 const {HallServices} = require('../models');
 
 class HallServicesController {
@@ -10,9 +8,9 @@ class HallServicesController {
     const {...data} = req.body;
     try {
       const newRecord = await HallServices.create(data);
-      return successResponse(res, newRecord);
+      return baseController.successResponse(res, newRecord);
     } catch (error) {
-      return errorResponse(res, 422, formatedError(error));
+      return baseController.errorResponse(res, 422, baseController.formatedError(error));
     }
   }
 
@@ -23,12 +21,12 @@ class HallServicesController {
     try {
       const dataToUpdate = await HallServices.findByPk(id);
       if (!dataToUpdate) {
-        return errorResponse(res, 422, "record not found");
+        return baseController.errorResponse(res, 422, "record not found");
       }
       await dataToUpdate.update(data);
-      return successResponse(res, dataToUpdate);
+      return baseController.successResponse(res, dataToUpdate);
     } catch (error) {
-      return errorResponse(res, 422, formatedError(error));
+      return baseController.errorResponse(res, 422, baseController.formatedError(error));
     }
   }
 
@@ -37,11 +35,11 @@ class HallServicesController {
     try {
       const records = await HallServices.findAll({});
       if (!records) {
-        return errorResponse(res, 422, "No record found in table.");
+        return baseController.errorResponse(res, 422, "No record found in table.");
       }
-      return successResponse(res, records);
+      return baseController.successResponse(res, records);
     } catch (error) {
-      return errorResponse(res, 422, formatedError(error));
+      return baseController.errorResponse(res, 422, baseController.formatedError(error));
     }
   }
 
@@ -51,10 +49,10 @@ class HallServicesController {
     try {
       const record = await HallServices.findByPk(id);
       if (!record)
-        return errorResponse(res, 422, `record not found for provided id: ${id}`);
-      return successResponse(res, record);
+        return baseController.errorResponse(res, 422, `record not found for provided id: ${id}`);
+      return baseController.successResponse(res, record);
     } catch (error) {
-      return errorResponse(res, 422, formatedError(error))
+      return baseController.errorResponse(res, 422, baseController.formatedError(error))
     }
   }
 
@@ -64,11 +62,11 @@ class HallServicesController {
     try {
       const deletedRowCount = await HallServices.destroy({ where: { id } });
       if (deletedRowCount === 0) {
-        return errorResponse(res, 422, "record not found");
+        return baseController.errorResponse(res, 422, "record not found");
       }
-      return successResponse(res, {message: "record deleted successfully"});
+      return baseController.successResponse(res, {message: "record deleted successfully"});
     } catch (error) {
-      return errorResponse(res, 422, formatedError(error));
+      return baseController.errorResponse(res, 422, baseController.formatedError(error));
     }
   }
 }

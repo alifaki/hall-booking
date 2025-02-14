@@ -1,5 +1,7 @@
 const db = require("../config/db");
 const { DataTypes } = require('sequelize');
+const Users = require("./Users");
+const HallsImages = require("./HallsImages");
 
 const Halls= db.define("halls", {
     hall_name: {
@@ -24,15 +26,15 @@ const Halls= db.define("halls", {
             notNull:{
                 msg: 'Building Id not be empty'
             },
-            isExist: async function(value) {
-                // Check uniqueness only when creating a new user
-                if (this.isNewRecord || this.changed('building_id')) {
-                    const exist = await Buildings.findOne({where :{id: value}});
-                    if (!exist) {
-                        throw new Error('Building id does not exist');
-                    }
-                }
-            }
+            // isExist: async function(value) {
+            //     // Check uniqueness only when creating a new user
+            //     if (this.isNewRecord || this.changed('building_id')) {
+            //         const exist = await Buildings.findOne({where :{id: value}});
+            //         if (!exist) {
+            //             throw new Error('Building id does not exist');
+            //         }
+            //     }
+            // }
         }
     },
     owner_id: {
@@ -45,15 +47,15 @@ const Halls= db.define("halls", {
             notNull:{
                 msg: 'Owner Id can not be empty'
             } ,
-            isExist: async function(value) {
-                // Check uniqueness only when creating a new user
-                if (this.isNewRecord || this.changed('owner_id')) {
-                    const exist = await Users.findOne({where :{id: value}});
-                    if (!exist) {
-                        throw new Error('Owner id does not exist');
-                    }
-                }
-            },
+            // isExist: async function(value) {
+            //     // Check uniqueness only when creating a new user
+            //     if (this.isNewRecord || this.changed('owner_id')) {
+            //         const exist = await Users.findOne({where :{id: value}});
+            //         if (!exist) {
+            //             throw new Error('Owner id does not exist');
+            //         }
+            //     }
+            // },
         }
     },
     capacity: {
@@ -81,5 +83,8 @@ const Halls= db.define("halls", {
         }
     }
 });
+
+Halls.belongsTo(Users, {foreignKey: 'owner_id'});
+Halls.hasMany(HallsImages, {foreignKey: 'hall_id'});
 
 module.exports = Halls;

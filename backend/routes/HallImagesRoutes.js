@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const hallImagesController = require('../controller/HallsImagesController');
-const uploadFile = require("../controller/fileUploadController");
+const hallImagesController = require('../controllers/HallsImagesController');
+const uploadFile = require("../controllers/fileUploadController");
 
 router.post('/', uploadFile, hallImagesController.addHallImage);
 

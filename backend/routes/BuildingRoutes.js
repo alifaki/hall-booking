@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const buildingController = require('../controller/BuildingController');
+const validate = require('../validations/validate');
+const { buildingValidation } = require('../validations/buildingValidation');
+
+const buildingController = require('../controllers/BuildingController');
 
 // Route to get all users
 router.get('/', buildingController.getAll);
@@ -9,7 +12,7 @@ router.get('/', buildingController.getAll);
 router.get('/:id', buildingController.getById);
 
 // Route to create a new user
-router.post('/', buildingController.create);
+router.post('/', validate(buildingValidation), buildingController.create);
 
 // Route to update an existing user
 router.put('/:id', buildingController.update);

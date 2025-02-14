@@ -1,6 +1,5 @@
-const jwt = require('jsonwebtoken');
 require("dotenv").config();
-const {successResponse, errorResponse, formatedError} = require('./baseController');
+const baseController = require('./BaseController');
 const bcrypt = require('bcrypt');
 
 const { Users } = require('../models');
@@ -11,16 +10,16 @@ class UserController {
   create = async (req, res) => {
     const {password, ...data} = req.body;
     if (!password){
-      return errorResponse(res, 422, "password is required");
+      return baseController.errorResponse(res, 422, "password is required");
     }
     else {
       data.password = await bcrypt.hash(password, 10);
     }
     try {
       const newUser = await Users.create(data);
-      return successResponse(res, newUser);
+      return baseController.successResponse(res, newUser);
     } catch (error) {
-      return errorResponse(res, 422, formatedError(error));
+      return baseController.errorResponse(res, 422, baseController.formatedError(error));
     }
   }
 
@@ -34,12 +33,12 @@ class UserController {
       }
       const dataToUpdate = await Users.findByPk(id);
       if (!dataToUpdate) {
-        return errorResponse(res, 422, "record not found");
+        return baseController.errorResponse(res, 422, "record not found");
       }
       await dataToUpdate.update(data);
-      return successResponse(res, dataToUpdate);
+      return baseController.successResponse(res, dataToUpdate);
     } catch (error) {
-      return errorResponse(res, 422, formatedError(error));
+      return baseController.errorResponse(res, 422, baseController.formatedError(error));
     }
   }
 
@@ -48,12 +47,12 @@ class UserController {
     try {
       const records = await Users.findAll();
       if (!records) {
-        return errorResponse(res, 422, "No record found in table.");
+        return baseController.errorResponse(res, 422, "No record found in table.");
       }
       delete records.password;
-      return successResponse(res, records);
+      return baseController.successResponse(res, records);
     } catch (error) {
-      return errorResponse(res, 422, formatedError(error));
+      return baseController.errorResponse(res, 422, baseController.formatedError(error));
     }
   }
 
@@ -63,11 +62,11 @@ class UserController {
     try {
       const record = await Users.findByPk(id);
       if (!record)
-        return errorResponse(res, 422, `record not found for provided id: ${id}`);
+        return baseController.errorResponse(res, 422, `record not found for provided id: ${id}`);
       delete record.password;
-      return successResponse(res, record);
+      return baseController.successResponse(res, record);
     } catch (error) {
-      return errorResponse(res, 422, formatedError(error))
+      return baseController.errorResponse(res, 422, baseController.formatedError(error))
     }
   }
 
@@ -77,11 +76,11 @@ class UserController {
     try {
       const deletedRowCount = await Users.destroy({ where: { id } });
       if (deletedRowCount === 0) {
-        return errorResponse(res, 422, "record not found");
+        return baseController.errorResponse(res, 422, "record not found");
       }
-      return successResponse(res, {message: "record deleted successfully"});
+      return baseController.successResponse(res, {message: "record deleted successfully"});
     } catch (error) {
-      return errorResponse(res, 422, formatedError(error));
+      return baseController.errorResponse(res, 422, baseController.formatedError(error));
     }
   }
 }

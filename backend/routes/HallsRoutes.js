@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const hallsController = require('../controller/HallsController');
+const hallsController = require('../controllers/HallsController');
 
 // Route to get all users
 router.get('/', hallsController.getAll);

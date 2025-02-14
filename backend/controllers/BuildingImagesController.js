@@ -1,6 +1,4 @@
-const jwt = require('jsonwebtoken');
-require("dotenv").config();
-const {successResponse, errorResponse, formatedError} = require('./baseController');
+const baseController = require('./BaseController');
 const {BuildingImages} = require('../models');
 
 class BuildingImagesController {
@@ -13,9 +11,9 @@ class BuildingImagesController {
     }
     try {
       const newRecord = await BuildingImages.create(data);
-      return successResponse(res, newRecord);
+      return baseController.successResponse(res, newRecord);
     } catch (error) {
-      return errorResponse(res, 422, formatedError(error));
+      return baseController.errorResponse(res, 422, baseController.formatedError(error));
     }
   }
 
@@ -27,10 +25,10 @@ class BuildingImagesController {
        where: {building_id: buildingId}
       });
       if (!record)
-        return errorResponse(res, 422, `record not found for provided id: ${id}`);
-      return successResponse(res, record);
+        return baseController.errorResponse(res, 422, `record not found for provided id: ${id}`);
+      return baseController.successResponse(res, record);
     } catch (error) {
-      return errorResponse(res, 422, formatedError(error))
+      return baseController.errorResponse(res, 422, baseController.formatedError(error))
     }
   }
 
@@ -40,11 +38,11 @@ class BuildingImagesController {
     try {
       const deletedRowCount = await BuildingImages.destroy({ where: { id } });
       if (deletedRowCount === 0) {
-        return errorResponse(res, 422, "record not found");
+        return baseController.errorResponse(res, 422, "record not found");
       }
-      return successResponse(res, {message: "record deleted successfully"});
+      return baseController.successResponse(res, {message: "record deleted successfully"});
     } catch (error) {
-      return errorResponse(res, 422, formatedError(error));
+      return baseController.errorResponse(res, 422, baseController.formatedError(error));
     }
   }
 }

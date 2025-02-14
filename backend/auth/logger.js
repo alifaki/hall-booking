@@ -1,6 +1,6 @@
 // logger.js
 const EventLog = require('../models/EventLog');
-const {successResponse, errorResponse} = require("../controller/baseController");
+const {successResponse, errorResponse} = require("../controllers/baseController");
 const {Users} = require("../models/Users");
 
 async function logUserActivity(req) {

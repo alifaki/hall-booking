@@ -1,5 +1,5 @@
 const {UserDetail} = require("../models/Users");
-const {errorResponse, successResponse} =  require("../controller/baseController");
+const {errorResponse, successResponse} =  require("../controllers/baseController");
 const jwt = require('jsonwebtoken');
 require("dotenv").config();
 const confirmEmail = async (req, res) => {

@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors'); // Import cors package
+
 // --- Import Sequelize instance & models (via index.js) ---
 const { sequelize } = require('./models');
 
@@ -22,18 +23,43 @@ const serviceRoutes = require("./routes/HallServicesRoutes");
 const authRoutes = require('./routes/authRoutes');
 //initialize your Routes for Files
 const {join} = require("path");
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 
-
+// Create Express App
 const app = express();
-const prefix = process.env.PREFIX;
-// Middleware
-app.use(bodyParser.json());
 
+/**
+ * ----------------------------------------------------
+ * Basic Security Middlewares
+ * ----------------------------------------------------
+ */
+// Helmet helps secure Express apps by setting various HTTP headers.
+app.use(helmet());
+
+// CORS allows or blocks requests from different origins.
+// Adjust the 'origin' property or pass a custom function to handle it dynamically.
 app.use(cors());
 
-// Error handling middleware
-//app.use(notFoundHandler);
+// Rate limiting to prevent brute force or DoS attacks.
+// Adjust "max" and "windowMs" to your project's scale.
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 1000,                // Limit each IP to 1000 requests per window
+    standardHeaders: true,    // Return rate limit info in RateLimit-* headers
+    legacyHeaders: false      // Disable the deprecated X-RateLimit-* headers
+});
+app.use(limiter);
 
+/**
+ * ----------------------------------------------------
+ * Body Parsing Middlewares
+ * ----------------------------------------------------
+ */
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+const prefix = process.env.PREFIX;
 
 // Routes
 app.use(`/${prefix}/auth`, authRoutes);

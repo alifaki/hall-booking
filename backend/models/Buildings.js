@@ -1,5 +1,7 @@
 const db = require("../config/db");
 const { DataTypes } = require('sequelize');
+const Halls = require("./Halls");
+const {BuildingImages} = require("./index");
 
 const Buildings= db.define("buildings", {
     building_name: {
@@ -39,5 +41,7 @@ const Buildings= db.define("buildings", {
         }
     }
 });
+
+Buildings.hasMany(Halls, {foreignKey: 'building_id'});
 
 module.exports = Buildings;

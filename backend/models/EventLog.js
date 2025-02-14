@@ -1,9 +1,8 @@
+const db = require("../config/db");
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db');
-const Users = require('./Users'); // Correct import
 
-const EventLog = sequelize.define('event_logs', {
-    logs_id: {
+const EventLog = db.define('event_logs', {
+    id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
@@ -35,16 +34,6 @@ const EventLog = sequelize.define('event_logs', {
     coordinate: {
         type: DataTypes.STRING(300),
         allowNull: true,
-    },
-    updated_at: {
-        type: DataTypes.DATE,
-        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-    },
-    created_at: {
-        type: DataTypes.DATE,
-        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-    },
+    }
 });
-
-EventLog.belongsTo(Users, { foreignKey: 'user_id' }); // Correct association
 module.exports = EventLog;

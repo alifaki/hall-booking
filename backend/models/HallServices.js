@@ -11,15 +11,6 @@ const HallServices= db.define("hall_services", {
             },
             notNull:{
                 msg: 'Halls Id not be empty'
-            },
-            isExist: async function(value) {
-                // Check uniqueness only when creating a new user
-                if (this.isNewRecord || this.changed('hall_id')) {
-                    const exist = await Halls.findOne({where :{id: value}});
-                    if (!exist) {
-                        throw new Error('Hall id does not exist');
-                    }
-                }
             }
         }
     },

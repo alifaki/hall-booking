@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 require("dotenv").config();
 const bcrypt = require('bcrypt');
 const {Users} = require('../models');
-const {errorResponse, successResponse, formatedError} = require('../controller/baseController');
+const {errorResponse, successResponse, formatedError} = require('../controllers/baseController');
 
 const tokenBlacklist = [];
 
@@ -15,18 +15,23 @@ function addToBlacklist(token) {
 function isTokenBlacklisted(token) {
     return tokenBlacklist.includes(token);
 }
-findUserByUsername = async (res, username) => {
+const findUserByUsername = async (res, username) => {
     try {
-        return Users.findOne({
+        const user = await Users.findOne({
             where: {
                 email: username // Filter by the 'username' column
             }
-        }).then(user => {
-            if (!user)
-                return errorResponse(res, 422, "Invalid username or Password !");
-            return user;
         });
+
+        if (!user) {
+            // If no user is found, send an error response and return
+            return errorResponse(res, 422, "Invalid username or Password !");
+        }
+
+        // If a user is found, return the user
+        return user;
     } catch (error) {
+        // Handle any errors that occur during the process
         return errorResponse(res, 500, error.message);
     }
 };

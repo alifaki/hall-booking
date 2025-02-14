@@ -9,17 +9,8 @@ const Bookings= db.define("bookings", {
             notEmpty: {
                 msg: 'Halls Id is required'
             },
-            notNull:{
+            notNull: {
                 msg: 'Halls Id not be empty'
-            },
-            isExist: async function(value) {
-                // Check uniqueness only when creating a new user
-                if (this.isNewRecord || this.changed('hall_id')) {
-                    const exist = await Halls.findOne({where :{id: value}});
-                    if (!exist) {
-                        throw new Error('Hall id does not exist');
-                    }
-                }
             }
         }
     },
@@ -32,16 +23,7 @@ const Bookings= db.define("bookings", {
             },
             notNull:{
                 msg: 'User Id can not be empty'
-            } ,
-            isExist: async function(value) {
-                // Check uniqueness only when creating a new user
-                if (this.isNewRecord || this.changed('user_id')) {
-                    const exist = await Users.findOne({where :{id: value}});
-                    if (!exist) {
-                        throw new Error('User id does not exist');
-                    }
-                }
-            },
+            }
         }
     },
     booking_date: {

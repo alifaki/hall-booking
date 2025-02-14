@@ -1,6 +1,4 @@
-const jwt = require('jsonwebtoken');
-require("dotenv").config();
-const {successResponse, errorResponse, formatedError} = require('./baseController');
+const baseController = require('./BaseController');
 const {Bookings, Users,Halls,HallsImages} = require('../models');
 
 class BookingController {
@@ -10,9 +8,9 @@ class BookingController {
     const {...data} = req.body;
     try {
       const newRecord = await Bookings.create(data);
-      return successResponse(res, newRecord);
+      return baseController.successResponse(res, newRecord);
     } catch (error) {
-      return errorResponse(res, 422, formatedError(error));
+      return baseController.errorResponse(res, 422, baseController.formatedError(error));
     }
   }
 
@@ -23,12 +21,12 @@ class BookingController {
     try {
       const dataToUpdate = await Bookings.findByPk(id);
       if (!dataToUpdate) {
-        return errorResponse(res, 422, "record not found");
+        return baseController.errorResponse(res, 422, "record not found");
       }
       await dataToUpdate.update(data);
-      return successResponse(res, dataToUpdate);
+      return baseController.successResponse(res, dataToUpdate);
     } catch (error) {
-      return errorResponse(res, 422, formatedError(error));
+      return baseController.errorResponse(res, 422, baseController.formatedError(error));
     }
   }
 
@@ -58,11 +56,11 @@ class BookingController {
         ]
       });
       if (!records) {
-        return errorResponse(res, 422, "No record found in table.");
+        return baseController.errorResponse(res, 422, "No record found in table.");
       }
-      return successResponse(res, records);
+      return baseController.successResponse(res, records);
     } catch (error) {
-      return errorResponse(res, 422, formatedError(error));
+      return baseController.errorResponse(res, 422, baseController.formatedError(error));
     }
   }
 
@@ -93,10 +91,10 @@ class BookingController {
         ]
       });
       if (!record)
-        return errorResponse(res, 422, `record not found for provided id: ${id}`);
-      return successResponse(res, record);
+        return baseController.errorResponse(res, 422, `record not found for provided id: ${id}`);
+      return baseController.successResponse(res, record);
     } catch (error) {
-      return errorResponse(res, 422, formatedError(error))
+      return baseController.errorResponse(res, 422, baseController.formatedError(error))
     }
   }
 
@@ -106,11 +104,11 @@ class BookingController {
     try {
       const deletedRowCount = await Bookings.destroy({ where: { id } });
       if (deletedRowCount === 0) {
-        return errorResponse(res, 422, "record not found");
+        return baseController.errorResponse(res, 422, "record not found");
       }
-      return successResponse(res, {message: "record deleted successfully"});
+      return baseController.successResponse(res, {message: "record deleted successfully"});
     } catch (error) {
-      return errorResponse(res, 422, formatedError(error));
+      return baseController.errorResponse(res, 422, baseController.formatedError(error));
     }
   }
 }

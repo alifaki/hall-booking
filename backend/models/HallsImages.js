@@ -23,15 +23,6 @@ const HallsImages= db.define("hall_images", {
             },
             notNull:{
                 msg: 'Hall Id not be empty'
-            },
-            isExist: async function(id) {
-                // Check uniqueness only when creating a new user
-                if (this.isNewRecord || this.changed('hall_id')) {
-                    const exist = await Halls.findByPk(id);
-                    if (!exist) {
-                        throw new Error('Hall id does not exist');
-                    }
-                }
             }
         }
     }
